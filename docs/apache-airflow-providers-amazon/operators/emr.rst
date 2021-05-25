@@ -37,20 +37,26 @@ Airflow to AWS EMR integration provides several operators to create and interact
 
  - :class:`~airflow.providers.amazon.aws.sensors.emr_job_flow.EmrJobFlowSensor`
  - :class:`~airflow.providers.amazon.aws.sensors.emr_step.EmrStepSensor`
+ - :class:`~airflow.providers.amazon.aws.sensors.emr_notebook_execution.EmrNotebookExecutionSensor`
  - :class:`~airflow.providers.amazon.aws.operators.emr_create_job_flow.EmrCreateJobFlowOperator`
  - :class:`~airflow.providers.amazon.aws.operators.emr_add_steps.EmrAddStepsOperator`
  - :class:`~airflow.providers.amazon.aws.operators.emr_modify_cluster.EmrModifyClusterOperator`
  - :class:`~airflow.providers.amazon.aws.operators.emr_terminate_job_flow.EmrTerminateJobFlowOperator`
+ - :class:`~airflow.providers.amazon.aws.operators.emr_start_notebook_execution.EmrStartNotebookExecutionOperator`
+ - :class:`~airflow.providers.amazon.aws.operators.emr_stop_notebook_execution.EmrStopNotebookExecutionOperator`
 
-Two example_dags are provided which showcase these operators in action.
+Three example_dags are provided which showcase these operators in action.
 
  - example_emr_job_flow_automatic_steps.py
  - example_emr_job_flow_manual_steps.py
+ - example_emr_notebook_execution.py
 
 .. note::
-    In order to run the 2 examples successfully, you need to create the IAM Service Roles (``EMR_EC2_DefaultRole`` and ``EMR_DefaultRole``) for Amazon EMR.
+    In order to run the first 2 examples successfully, you need to create the IAM Service Roles (``EMR_EC2_DefaultRole`` and ``EMR_DefaultRole``) for Amazon EMR.
 
     You can create these roles using the AWS CLI: ``aws emr create-default-roles``
+
+    In order to run the 3rd example successfully, you need to have an EMR Cluster and an EMR Notebook ready.
 
 Create EMR Job Flow with automatic steps
 ----------------------------------------
@@ -110,6 +116,35 @@ Here is the task definitions for our DAG.
     :language: python
     :start-after: [START howto_operator_emr_manual_steps_tasks]
     :end-before: [END howto_operator_emr_manual_steps_tasks]
+
+Start an EMR Notebook execution
+-------------------------------
+
+Purpose
+"""""""
+
+In the example dag ``example_emr_notebook_execution.py``, we start an EMR Notebook execution, then add a sensor step
+to wait until the execution finishes or fails.
+
+EMR Notebook execution configuration
+""""""""""""""""""""""""""""""""""""
+
+To start an EMR Notebook execution, you need to specify the configuration:
+
+.. exampleinclude:: /../../airflow/providers/amazon/aws/example_dags/example_emr_notebook_execution.py
+    :language: python
+    :start-after: [START howto_operator_emr_notebook_execution_env_variables]
+    :end-before: [END howto_operator_emr_notebook_execution_env_variables]
+
+Defining tasks
+""""""""""""""
+
+Here is the task definitions for our DAG.
+
+.. exampleinclude:: /../../airflow/providers/amazon/aws/example_dags/example_emr_notebook_execution.py
+    :language: python
+    :start-after: [START howto_operator_emr_notebook_execution_tasks]
+    :end-before: [END howto_operator_emr_notebook_execution_tasks]
 
 Reference
 ---------

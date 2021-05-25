@@ -178,6 +178,8 @@ operators:
       - airflow.providers.amazon.aws.operators.emr_create_job_flow
       - airflow.providers.amazon.aws.operators.emr_modify_cluster
       - airflow.providers.amazon.aws.operators.emr_terminate_job_flow
+      - airflow.providers.amazon.aws.operators.emr_start_notebook_execution
+      - airflow.providers.amazon.aws.operators.emr_stop_notebook_execution
   - integration-name: Amazon Glacier
     python-modules:
       - airflow.providers.amazon.aws.operators.glacier
@@ -232,6 +234,7 @@ sensors:
       - airflow.providers.amazon.aws.sensors.emr_base
       - airflow.providers.amazon.aws.sensors.emr_job_flow
       - airflow.providers.amazon.aws.sensors.emr_step
+      - airflow.providers.amazon.aws.sensors.emr_notebook_execution
   - integration-name: Amazon Glacier
     python-modules:
       - airflow.providers.amazon.aws.sensors.glacier
